@@ -61,7 +61,7 @@ void MainForm::on_StartBtn_clicked()
 {
     if (paused)
     {
-        QString fname = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit(""),
+        QString fname = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit("Открыть"),
                          "C:/",
                          "TorrenFile (*.torrent)");
 
