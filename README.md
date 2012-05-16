@@ -1,4 +1,4 @@
 Games-Autoupdater
 =================
 
-This program to keep games from VALVe up-to-date.
+This program created to keep games from VALVe up-to-date.
