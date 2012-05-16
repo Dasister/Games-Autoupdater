@@ -92,7 +92,7 @@ void MainForm::on_StartBtn_clicked()
         ui->StartBtn->setText("Pause");
         s.resume();
         paused = false;
-        char *str = new char [256];
+        QString status_str;
         state = h.status();
         while (!paused && !state.is_finished)
         {
@@ -101,27 +101,14 @@ void MainForm::on_StartBtn_clicked()
 
             if (state.state == torrent_status::checking_files)
             {
-                snprintf(str, 255, "Checking...");
+                status_str = "Checking...";
             }
             else
             {
-                char *buf_str = new char [500];
-                char *buf_str1 = new char [500];
-                if (state.total_download * 1.0 / (1024 * 1024) < 1)
-                {
-                    snprintf(buf_str1, 499, "Downloaded %.2f MB from", state.total_download * 1.0 / 1024);
-                }
-                else
-                    snprintf(buf_str1, 499, "Downloaded %.2f GB from", state.total_download * 1.0 / (1024 * 1024));
-                if (total_size * 1.0 / (1024 * 1024) < 1)
-                {
-                    snprintf(buf_str, 499, "%.2f MB", total_size * 1.0 / 1024);
-                }
-                else
-                    snprintf(buf_str, 499, "%.2f GB", total_size * 1.0 / (1024 * 1024));
-                snprintf(str, 255, "Downloading... Download speed is %.2f KB/s. %s %s", state.download_rate * 1.0 / 1024, buf_str1,  buf_str);
+                status_str.sprintf("Downloading... Download speed is %.2f KB/s. ", state.download_rate * 1.0 / 1024);
+                status_str += GetSize(state.total_download, total_size);
             }
-            ui->label->setText(QString::fromAscii(str));
+            ui->label->setText(status_str);
             ui->progressBar->setValue(state.progress_ppm / 10000.f);
             QApplication::processEvents();
         }
@@ -152,22 +139,22 @@ int MainForm::Get_Game()
 
 QString MainForm::GetSize(size_type total_download, size_type total_size)
 {
-    QString str;
     char *buf_str = new char [500];
-    if (total_download * 1.0 / (1024 * 1024) < 1)
+    if ((float)((state.total_download * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, 499, "Downloaded %.2f MB from", total_download / 1024);
+        snprintf(buf_str, 499, "Downloaded %.2f MB from", state.total_download * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, 499, "Downloaded %.2f GB from", total_download / (1024 * 1024));
-    if (total_size * 1.0 / (1024 * 1024) < 1)
+        snprintf(buf_str, 499, "Downloaded %.2f GB from", state.total_download * 1.0 / (1024 * 1024 * 1024));
+    if ((float)((total_size * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, 499, " %s %.2f MB", buf_str, total_size / 1024);
+        snprintf(buf_str, 499, "%s %.2f MB", buf_str, total_size * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, 499, " %s %.2f GB", buf_str, total_size / (1024 * 1024));
-    str.fromAscii(buf_str);
-    ui->statusBar->showMessage(str);
+        snprintf(buf_str, 499, "%s %.2f GB", buf_str, total_size * 1.0 / (1024 * 1024 * 1024));
+
+    QString str = QString::fromAscii(buf_str);
+    delete [] buf_str;
     return str;
 }
 
