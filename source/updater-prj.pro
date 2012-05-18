@@ -24,11 +24,7 @@ INCLUDEPATH += . \
 
 CONFIG += static
 
-<<<<<<< HEAD
 unix:LIBS += -lssl -ltorrent-rasterbar
-=======
-LIBS += -lssl -ltorrent-rasterbar
->>>>>>> 7e6f036a57728d150bba678e2883b30473ed347f
 
 win32:LIBS += -L"C:/libtorrent/lib" \
     -L"C:/boost_1_49_0/stage/lib" \
