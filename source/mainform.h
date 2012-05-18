@@ -3,6 +3,13 @@
 
 #include <QMainWindow>
 
+#include <stdlib.h>
+#include <string.h>
+#include <QFileDialog>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
+
 #include "libtorrent/config.hpp"
 
 #include <boost/bind.hpp>

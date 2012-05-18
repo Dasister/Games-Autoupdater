@@ -2,10 +2,7 @@
 #include "ui_mainform.h"
 #include "aboutwindow.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <QFileDialog>
-#include <QDir>
+#define charsmax(a) sizeof(a) - 1
 
 using namespace libtorrent;
 
@@ -48,6 +45,8 @@ MainForm::MainForm(QWidget *parent) :
     switch (game)
     {
         case Game_DODS: ui->statusBar->showMessage("Day of Defeat: Source Found!"); break;
+        case Game_TF2: ui->statusBar->showMessage("Counter-Strike: Source Found!"); break;
+        case Game_CSS: ui->statusBar->showMessage("Team Fortress 2 Found!"); break;
         default: ui->statusBar->showMessage("Game not found!"); break;
     }
 }
@@ -62,7 +61,7 @@ void MainForm::on_StartBtn_clicked()
     if (paused)
     {
         QString fname = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit("Открыть"),
-                         "C:/",
+                         QDir::currentPath(),
                          "TorrenFile (*.torrent)");
 
         s.listen_on(std::make_pair(6881, 6889), ec);
@@ -128,33 +127,37 @@ void MainForm::on_StartBtn_clicked()
 
 int MainForm::Get_Game()
 {
-    if (QDir("cstrike").exists())
-        return Game_CSS;
-    if (QDir("dod").exists())
-        return Game_DODS;
-    if (QDir("tf").exists())
-        return Game_TF2;
+    QFile InFile("steam_appid.txt");
+    if (!InFile.open(QIODevice::ReadOnly))
+        return Game_Unknown;
+    QTextStream sAppId(&InFile);
+    QString AppID = sAppId.readLine();
+    switch (AppID.toInt())
+    {
+        case 240: return Game_CSS;
+        case 300: return Game_DODS;
+        case 440: return Game_TF2;
+    }
     return Game_Unknown;
 }
 
 QString MainForm::GetSize(size_type total_download, size_type total_size)
 {
-    char *buf_str = new char [500];
+    char buf_str[500];
     if ((float)((state.total_download * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, 499, "Downloaded %.2f MB from", state.total_download * 1.0 / (1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "Downloaded %.2f MB from", total_download * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, 499, "Downloaded %.2f GB from", state.total_download * 1.0 / (1024 * 1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "Downloaded %.2f GB from", total_download * 1.0 / (1024 * 1024 * 1024));
     if ((float)((total_size * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, 499, "%s %.2f MB", buf_str, total_size * 1.0 / (1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "%s %.2f MB", buf_str, total_size * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, 499, "%s %.2f GB", buf_str, total_size * 1.0 / (1024 * 1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "%s %.2f GB", buf_str, total_size * 1.0 / (1024 * 1024 * 1024));
 
     QString str = QString::fromAscii(buf_str);
-    delete [] buf_str;
     return str;
 }
 
