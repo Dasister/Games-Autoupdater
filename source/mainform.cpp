@@ -2,6 +2,8 @@
 #include "ui_mainform.h"
 #include "aboutwindow.h"
 
+#define charsmax(a) sizeof(a) - 1
+
 using namespace libtorrent;
 
 bool paused = true;
@@ -126,7 +128,7 @@ void MainForm::on_StartBtn_clicked()
 int MainForm::Get_Game()
 {
     QFile InFile("steam_appid.txt");
-    if (!InFile.open(IO_ReadOnly))
+    if (!InFile.open(QIODevice::ReadOnly))
         return Game_Unknown;
     QTextStream sAppId(&InFile);
     QString AppID = sAppId.readLine();
@@ -141,22 +143,21 @@ int MainForm::Get_Game()
 
 QString MainForm::GetSize(size_type total_download, size_type total_size)
 {
-    char *buf_str = new char [500];
+    char buf_str[500];
     if ((float)((state.total_download * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, 499, "Downloaded %.2f MB from", state.total_download * 1.0 / (1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "Downloaded %.2f MB from", total_download * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, 499, "Downloaded %.2f GB from", state.total_download * 1.0 / (1024 * 1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "Downloaded %.2f GB from", total_download * 1.0 / (1024 * 1024 * 1024));
     if ((float)((total_size * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, 499, "%s %.2f MB", buf_str, total_size * 1.0 / (1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "%s %.2f MB", buf_str, total_size * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, 499, "%s %.2f GB", buf_str, total_size * 1.0 / (1024 * 1024 * 1024));
+        snprintf(buf_str, charsmax(buf_str), "%s %.2f GB", buf_str, total_size * 1.0 / (1024 * 1024 * 1024));
 
     QString str = QString::fromAscii(buf_str);
-    delete [] buf_str;
     return str;
 }
 
