@@ -143,21 +143,20 @@ int MainForm::Get_Game()
 
 QString MainForm::GetSize(size_type total_download, size_type total_size)
 {
-    char buf_str[500];
+    QString str;
     if ((float)((state.total_download * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, charsmax(buf_str), "Downloaded %.2f MB from", total_download * 1.0 / (1024 * 1024));
+        str += QString("Downloaded %.2f MB from").arg(total_download * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, charsmax(buf_str), "Downloaded %.2f GB from", total_download * 1.0 / (1024 * 1024 * 1024));
+        str += QString("Downloaded %.2f GB from").arg(total_download * 1.0 / (1024 * 1024 * 1024));
     if ((float)((total_size * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        snprintf(buf_str, charsmax(buf_str), "%s %.2f MB", buf_str, total_size * 1.0 / (1024 * 1024));
+        str += QString("%s %.2f MB").arg(total_size * 1.0 / (1024 * 1024));
     }
     else
-        snprintf(buf_str, charsmax(buf_str), "%s %.2f GB", buf_str, total_size * 1.0 / (1024 * 1024 * 1024));
+        str += QString("%s %.2f GB").arg(1.0 / (1024 * 1024 * 1024));
 
-    QString str = QString::fromAscii(buf_str);
     return str;
 }
 
