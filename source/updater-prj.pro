@@ -6,11 +6,10 @@
 
 QT       += core gui
 
-QMAKE_LFLAGS_RELEASE = /NODEFAULTLIB:msvcprt.lib /NODEFAULTLIB:msvcprtd.lib /NODEFAULTLIB:libcmt.lib
-QMAKE_LFLAGS_DEBUG = /NODEFAULTLIB:msvcprtd.lib /NODEFAULTLIB:libcmtd.lib
+win32:QMAKE_LFLAGS_RELEASE = /NODEFAULTLIB:msvcprt.lib /NODEFAULTLIB:msvcprtd.lib /NODEFAULTLIB:libcmt.lib
+win32:QMAKE_LFLAGS_DEBUG = /NODEFAULTLIB:msvcprtd.lib /NODEFAULTLIB:libcmtd.lib
 
-DEFINES += . \
-        BOOST_ASIO_SEPARATE_COMPILATION \
+DEFINES += BOOST_ASIO_SEPARATE_COMPILATION \
         WITH_SHIPPED_GEOIP_H \
         TORRENT_USE_OPENSSL \
         BOOST_ASIO_ENABLE_CANCELIO
@@ -24,6 +23,8 @@ INCLUDEPATH += . \
                 C:/openssl/include
 
 CONFIG += static
+
+unix:LIBS += -lssl -ltorrent-rasterbar
 
 win32:LIBS += -L"C:/libtorrent/lib" \
     -L"C:/boost_1_49_0/stage/lib" \
