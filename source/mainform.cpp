@@ -2,8 +2,6 @@
 #include "ui_mainform.h"
 #include "aboutwindow.h"
 
-#define charsmax(a) sizeof(a) - 1
-
 using namespace libtorrent;
 
 bool paused = true;
