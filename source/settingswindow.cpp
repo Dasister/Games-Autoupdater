@@ -3,10 +3,12 @@
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::SettingsWindow) {
+    ui(new Ui::SettingsWindow)
+{
     ui->setupUi(this);
 }
 
-SettingsWindow::~SettingsWindow() {
+SettingsWindow::~SettingsWindow()
+{
     delete ui;
 }

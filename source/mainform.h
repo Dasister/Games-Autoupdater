@@ -9,6 +9,7 @@
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
+#include <QCloseEvent>
 
 #include "libtorrent/config.hpp"
 
@@ -38,12 +39,16 @@ namespace Ui {
 class MainForm;
 }
 
-class MainForm : public QMainWindow {
+class MainForm : public QMainWindow
+{
     Q_OBJECT
     
 public:
     explicit MainForm(QWidget *parent = 0);
     ~MainForm();
+
+protected:
+    virtual void closeEvent(QCloseEvent *event);
     
 private slots:
     void on_StartBtn_clicked();

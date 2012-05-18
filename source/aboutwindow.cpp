@@ -3,10 +3,12 @@
 
 AboutWindow::AboutWindow(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AboutWindow) {
+    ui(new Ui::AboutWindow)
+{
     ui->setupUi(this);
 }
 
-AboutWindow::~AboutWindow() {
+AboutWindow::~AboutWindow()
+{
     delete ui;
 }
