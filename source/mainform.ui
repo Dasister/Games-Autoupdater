@@ -197,7 +197,7 @@ border-radius: 8px;
      <x>0</x>
      <y>0</y>
      <width>778</width>
-     <height>16</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -232,7 +232,7 @@ radius: 1.35, stop: 0 #fff, stop: 1 #ddd);
    <widget class="QMenu" name="menu">
     <property name="styleSheet">
      <string notr="true">QMenu {
-border-raduis: 5px;
+border-radius: 5px;
 }</string>
     </property>
     <property name="tearOffEnabled">
