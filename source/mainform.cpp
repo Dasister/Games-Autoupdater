@@ -2,11 +2,6 @@
 #include "ui_mainform.h"
 #include "aboutwindow.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <QFileDialog>
-#include <QDir>
-
 using namespace libtorrent;
 
 bool paused = true;
@@ -48,6 +43,8 @@ MainForm::MainForm(QWidget *parent) :
     switch (game)
     {
         case Game_DODS: ui->statusBar->showMessage("Day of Defeat: Source Found!"); break;
+        case Game_TF2: ui->statusBar->showMessage("Counter-Strike: Source Found!"); break;
+        case Game_CSS: ui->statusBar->showMessage("Team Fortress 2 Found!"); break;
         default: ui->statusBar->showMessage("Game not found!"); break;
     }
 }
@@ -128,12 +125,17 @@ void MainForm::on_StartBtn_clicked()
 
 int MainForm::Get_Game()
 {
-    if (QDir("cstrike").exists())
-        return Game_CSS;
-    if (QDir("dod").exists())
-        return Game_DODS;
-    if (QDir("tf").exists())
-        return Game_TF2;
+    QFile InFile("steam_appid.txt");
+    if (!InFile.open(IO_ReadOnly))
+        return Game_Unknown;
+    QTextStream sAppId(&InFile);
+    QString AppID = sAppId.readLine();
+    switch (AppID.toInt())
+    {
+        case 240: return Game_CSS;
+        case 300: return Game_DODS;
+        case 440: return Game_TF2;
+    }
     return Game_Unknown;
 }
 
