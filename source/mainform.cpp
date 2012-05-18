@@ -22,8 +22,7 @@ int game;
 /* Var's */
 /* Enum's */
 
-enum CurGame
-{
+enum CurGame {
     Game_Unknown = -1,
     Game_CSS,
     Game_DODS,
@@ -36,8 +35,7 @@ enum CurGame
 
 MainForm::MainForm(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainForm)
-{
+    ui(new Ui::MainForm) {
     ui->setupUi(this);
     game = MainForm::Get_Game();
     switch (game)
@@ -54,33 +52,28 @@ MainForm::~MainForm()
     delete ui;
 }
 
-void MainForm::on_StartBtn_clicked()
-{
-    if (paused)
-    {
+void MainForm::on_StartBtn_clicked() {
+    if (paused) {
         QString fname = QFileDialog::getOpenFileName(this, QString::fromLocal8Bit("Открыть"),
                          QDir::currentPath(),
                          "TorrenFile (*.torrent)");
 
         s.listen_on(std::make_pair(6881, 6889), ec);
-        if (ec)
-        {
+        if (ec) {
             ui->label->setText(QString::fromLocal8Bit(ec.message().c_str()));
             return;
         }
         add_torrent_params p;
         p.save_path = "./";
         p.ti = new torrent_info(fname.toStdString(), ec);
-        if (ec)
-        {
+        if (ec) {
             ui->label->setText(QString::fromLocal8Bit(ec.message().c_str()));
             return;
         }
         h = s.add_torrent(p, ec);
         torrent_info info = h.get_torrent_info();
         size_type total_size = info.total_size();
-        if (ec)
-        {
+        if (ec) {
              ui->label->setText(QString::fromLocal8Bit(ec.message().c_str()));
              return;
         }
@@ -91,17 +84,14 @@ void MainForm::on_StartBtn_clicked()
         paused = false;
         QString status_str;
         state = h.status();
-        while (!paused && !state.is_finished)
-        {
+        while (!paused && !state.is_finished) {
             state = h.status();
             state.total_download;
 
-            if (state.state == torrent_status::checking_files)
-            {
+            if (state.state == torrent_status::checking_files)  {
                 status_str = "Checking...";
             }
-            else
-            {
+            else {
                 status_str.sprintf("Downloading... Download speed is %.2f KB/s. ", state.download_rate * 1.0 / 1024);
                 status_str += GetSize(state.total_download, total_size);
             }
@@ -111,8 +101,7 @@ void MainForm::on_StartBtn_clicked()
         }
         ui->label->setText("Done!");
     }
-    else
-    {
+    else {
         paused = true;
         ui->StartBtn->setText("Start");
         s.pause();
@@ -123,15 +112,13 @@ void MainForm::on_StartBtn_clicked()
 
 /* Misc */
 
-int MainForm::Get_Game()
-{
+int MainForm::Get_Game() {
     QFile InFile("steam_appid.txt");
     if (!InFile.open(QIODevice::ReadOnly))
         return Game_Unknown;
     QTextStream sAppId(&InFile);
     QString AppID = sAppId.readLine();
-    switch (AppID.toInt())
-    {
+    switch (AppID.toInt()) {
         case 240: return Game_CSS;
         case 300: return Game_DODS;
         case 440: return Game_TF2;
@@ -139,19 +126,14 @@ int MainForm::Get_Game()
     return Game_Unknown;
 }
 
-QString MainForm::GetSize(size_type total_download, size_type total_size)
-{
+QString MainForm::GetSize(size_type total_download, size_type total_size) {
     QString str;
     if ((float)((state.total_download * 1.0) / (1024 * 1024 * 1024)) < 1)
-    {
         str += QString("Downloaded %1 MB of").arg(total_download * 1.0 / (1024 * 1024), 0, 'f', 2);
-    }
     else
         str += QString("Downloaded %1 GB of").arg(total_download * 1.0 / (1024 * 1024 * 1024), 0, 'f', 2);
     if ((float)((total_size * 1.0) / (1024 * 1024 * 1024)) < 1)
-    {
         str += QString(" %1 MB").arg(total_size * 1.0 / (1024 * 1024), 0, 'f', 2);
-    }
     else
         str += QString(" %1 GB").arg(1.0 / (1024 * 1024 * 1024), 0, 'f', 2);
 
