@@ -144,16 +144,16 @@ QString MainForm::GetSize(size_type total_download, size_type total_size)
     QString str;
     if ((float)((state.total_download * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        str += QString("Downloaded %.2f MB from").arg(total_download * 1.0 / (1024 * 1024));
+        str += QString("Downloaded %1 MB from").arg(total_download * 1.0 / (1024 * 1024));
     }
     else
-        str += QString("Downloaded %.2f GB from").arg(total_download * 1.0 / (1024 * 1024 * 1024));
+        str += QString("Downloaded %1 GB from").arg(total_download * 1.0 / (1024 * 1024 * 1024));
     if ((float)((total_size * 1.0) / (1024 * 1024 * 1024)) < 1)
     {
-        str += QString("%s %.2f MB").arg(total_size * 1.0 / (1024 * 1024));
+        str += QString("%1 %2 MB").arg(total_size * 1.0 / (1024 * 1024));
     }
     else
-        str += QString("%s %.2f GB").arg(1.0 / (1024 * 1024 * 1024));
+        str += QString("%1 %2 GB").arg(1.0 / (1024 * 1024 * 1024));
 
     return str;
 }
