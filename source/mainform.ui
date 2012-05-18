@@ -239,11 +239,17 @@ border-radius: 5px;
      <bool>true</bool>
     </property>
     <property name="title">
-     <string>Выход</string>
+     <string>Файл</string>
     </property>
+    <addaction name="action"/>
    </widget>
    <addaction name="menu"/>
   </widget>
+  <action name="action">
+   <property name="text">
+    <string>Выход</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
