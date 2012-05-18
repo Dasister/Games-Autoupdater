@@ -38,8 +38,7 @@ namespace Ui {
 class MainForm;
 }
 
-class MainForm : public QMainWindow
-{
+class MainForm : public QMainWindow {
     Q_OBJECT
     
 public:

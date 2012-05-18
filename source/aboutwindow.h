@@ -7,8 +7,7 @@ namespace Ui {
 class AboutWindow;
 }
 
-class AboutWindow : public QWidget
-{
+class AboutWindow : public QWidget {
     Q_OBJECT
     
 public:
