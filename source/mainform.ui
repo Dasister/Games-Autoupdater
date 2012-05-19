@@ -80,7 +80,7 @@ radius: 1.35, stop: 0 #fff, stop: 1 #ddd);
 }</string>
     </property>
     <property name="text">
-     <string>Проверить</string>
+     <string>Start</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -174,7 +174,7 @@ background: qlineargradient(x1: 0, y1: 0.5, x2: 1, y2: 0.5, stop: 0 green, stop:
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../Documents and Settings/Администратор/Мои документы/Sites/title.png</pixmap>
+     <pixmap resource="icons.qrc">:/main/imgs/imgs/title.png</pixmap>
     </property>
    </widget>
   </widget>
@@ -197,7 +197,7 @@ border-radius: 8px;
      <x>0</x>
      <y>0</y>
      <width>778</width>
-     <height>21</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -239,7 +239,7 @@ border-radius: 5px;
      <bool>true</bool>
     </property>
     <property name="title">
-     <string>Файл</string>
+     <string>File</string>
     </property>
     <addaction name="action"/>
    </widget>
@@ -247,7 +247,7 @@ border-radius: 5px;
   </widget>
   <action name="action">
    <property name="text">
-    <string>Выход</string>
+    <string>Exit</string>
    </property>
   </action>
  </widget>

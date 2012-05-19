@@ -10,6 +10,9 @@
 #include <QFile>
 #include <QTextStream>
 #include <QCloseEvent>
+#include <QTranslator>
+#include <QLocale>
+#include <QTextCodec>
 
 #include "libtorrent/config.hpp"
 
@@ -39,8 +42,7 @@ namespace Ui {
 class MainForm;
 }
 
-class MainForm : public QMainWindow
-{
+class MainForm : public QMainWindow {
     Q_OBJECT
     
 public:

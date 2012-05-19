@@ -47,3 +47,6 @@ FORMS    += mainform.ui \
 
 RESOURCES += \
     icons.qrc
+
+TRANSLATIONS += translations/tr_en.ts \
+                translations/tr_ru.ts
