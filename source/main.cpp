@@ -8,6 +8,7 @@ int main(int argc, char *argv[]) {
     app.installTranslator(&tTranslation);
     MainForm w;
     w.show();
+    app.setWindowIcon(QIcon(":/main/icons/icons/cstrike.png"));
     
     return app.exec();
 }

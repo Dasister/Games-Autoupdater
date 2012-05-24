@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/main/icons">
-        <file>icons/cstrike.ico</file>
+        <file>icons/cstrike.png</file>
     </qresource>
     <qresource prefix="/main/imgs">
         <file>imgs/title.png</file>

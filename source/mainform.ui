@@ -27,14 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="icons.qrc">
-    <normaloff>:/main/icons/icons/cstrike.ico</normaloff>
-    <normalon>:/main/icons/icons/cstrike.ico</normalon>
-    <disabledoff>:/main/icons/icons/cstrike.ico</disabledoff>
-    <disabledon>:/main/icons/icons/cstrike.ico</disabledon>
-    <activeoff>:/main/icons/icons/cstrike.ico</activeoff>
-    <activeon>:/main/icons/icons/cstrike.ico</activeon>
-    <selectedoff>:/main/icons/icons/cstrike.ico</selectedoff>
-    <selectedon>:/main/icons/icons/cstrike.ico</selectedon>:/main/icons/icons/cstrike.ico</iconset>
+    <normaloff>:/main/icons/icons/cstrike.png</normaloff>:/main/icons/icons/cstrike.png</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -241,11 +234,11 @@ border-radius: 5px;
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="ExitBtn"/>
    </widget>
    <addaction name="menu"/>
   </widget>
-  <action name="action">
+  <action name="ExitBtn">
    <property name="text">
     <string>Exit</string>
    </property>

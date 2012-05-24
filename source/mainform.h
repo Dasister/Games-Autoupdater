@@ -57,6 +57,12 @@ private slots:
 
     int Get_Game();
     QString GetSize(libtorrent::size_type total_download, libtorrent::size_type total_size);
+    void RetranslateForm();
+    void ExitBtnPressed();
+    void SettingsPressed();
+
+public slots:
+    void AcceptNewSettings(const int &DownloadLimit, const int &UploadLimit);
 
 
 private:

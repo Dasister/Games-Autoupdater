@@ -1,6 +1,8 @@
 #include "mainform.h"
 #include "ui_mainform.h"
 #include "aboutwindow.h"
+#include "settingswindow.h"
+#include <QMessageBox>
 
 using namespace libtorrent;
 
@@ -8,7 +10,7 @@ bool paused = true;
 
 /* Torrent vars */
 session s;
-session_settings settings;
+//session_settings settings;
 
 torrent_status state;
 
@@ -31,6 +33,12 @@ enum CurGame {
 
 /* Enum's */
 
+/* Forms */
+
+SettingsWindow *settings;
+
+/* Forms */
+
 
 
 MainForm::MainForm(QWidget *parent) :
@@ -45,6 +53,11 @@ MainForm::MainForm(QWidget *parent) :
         case Game_CSS: ui->statusBar->showMessage(tr("Team Fortress 2 Found!")); break;
         default: ui->statusBar->showMessage(tr("Game not found!")); break;
     }
+    QAction *OpenSettings = ui->menuBar->addAction(tr("Settings"));
+    settings = new SettingsWindow;
+    connect(ui->ExitBtn, SIGNAL(triggered()), this, SLOT(ExitBtnPressed()));
+    connect(OpenSettings, SIGNAL(triggered()), this, SLOT(SettingsPressed()));
+    connect(settings, SIGNAL(ApplySettings(const int &, const int &)), this, SLOT(AcceptNewSettings(const int &, const int &)));
 }
 
 MainForm::~MainForm()
@@ -145,6 +158,27 @@ void MainForm::closeEvent(QCloseEvent *event) {
     s.pause();
     QApplication::processEvents();
 }
+
+void MainForm::RetranslateForm() {
+
+}
+
+void MainForm::ExitBtnPressed() {
+    MainForm::close();
+}
+
+void MainForm::SettingsPressed() {
+    settings->show();
+    settings->activateWindow();
+}
+
+void MainForm::AcceptNewSettings(const int &DownloadLimit, const int &UploadLimit) {
+    h.set_download_limit(DownloadLimit);
+    h.set_upload_limit(UploadLimit);
+
+    ui->statusBar->showMessage(QString::number(DownloadLimit, 10));
+}
+
 
 /* Misc */
 
